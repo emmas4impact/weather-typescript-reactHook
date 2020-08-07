@@ -13,13 +13,19 @@ const Weather = ({title}: HeaderProps) =>{
     const [weather, setWeather] : any= useState([]);
     const [wind, setWind]: any= useState({});
     const [name, setName]= useState("")
+    const [unit, setUnit] = useState("metric")
+    
     const handleChange = (e: any) => {
         e.preventDefault();
         setLocation(e.currentTarget.value);
       };
     
+      const handleUnit= (e: any) => {
+        setUnit(e.currentTarget.value);
+      };
+    
     const fetchData = async (value: string) =>{
-       const response =await fetch("https://community-open-weather-map.p.rapidapi.com/weather?q="+value+"&units=metric", {
+       const response =await fetch("https://community-open-weather-map.p.rapidapi.com/weather?q="+value+`&units=${unit}`, {
             "method": "GET",
             "headers": {
                 "x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
@@ -37,7 +43,7 @@ const Weather = ({title}: HeaderProps) =>{
        setSys(data.sys)
        setWind(data.wind)
        setName(data.name)
-       setLocation('')
+       //setLocation('')
        
        
     }
@@ -54,6 +60,23 @@ const Weather = ({title}: HeaderProps) =>{
                     placeholder="City..."
                     onChange={handleChange}
                 />
+                <Form.Check type="radio"
+                 aria-label="C" 
+                 name="units"
+                 value="metric"
+                 label="Celcius"
+                 checked={unit==="metric"}
+                 onChange={handleUnit}/>
+                
+                 
+                <Form.Check type="radio"
+                 aria-label="F" 
+                 name="units"
+                 value="imperial"
+                 label="Fahrenheit"
+                 checked={unit==="imperial"}
+                 onChange={handleUnit}/>
+                
                 <Button
                     onClick={()=>fetchData(location)}
                     value="search"
@@ -85,9 +108,13 @@ const Weather = ({title}: HeaderProps) =>{
                     {/* <li><strong>Forecast: </strong> {weather.main}</li> */}
                     <li><strong>Feels Like: </strong> {main.feels_like}</li>
                     <li><strong>Humidity: </strong>{main.humidity}</li>
-                    <li><strong>Temperature: </strong> {Math.round(main.temp) } degress</li>
-                    <li><strong>Min Temperature: </strong> {Math.round(main.temp_min) } degress</li>
-                    <li><strong>Max Temperature: </strong> {Math.round(main.temp_max) } degress</li>
+                    <li><strong>Temperature: </strong> {Math.round(main.temp) }° degree</li>
+                    <li><strong>Min Temperature: </strong> {Math.round(main.temp_min) }° degree</li>
+                    <li><strong>Max Temperature: </strong> {Math.round(main.temp_max) }°degree</li>
+                    <li><strong>Lon: </strong> {coord.lon} </li>
+                    <li><strong>Lat: </strong> {coord.lat}</li>
+                    <li><strong>Degree: </strong> {wind.deg} </li>
+                    <li><strong>Speed: </strong> {coord.speed}</li>
                     <li><strong>Country: </strong> {sys.country}</li>
                     <li><strong>City: </strong> {name}</li>
                    
