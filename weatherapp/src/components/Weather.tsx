@@ -114,7 +114,7 @@ const Weather = ({title}: HeaderProps) =>{
                     <li><strong>Lon: </strong> {coord.lon} </li>
                     <li><strong>Lat: </strong> {coord.lat}</li>
                     <li><strong>Degree: </strong> {wind.deg} </li>
-                    <li><strong>Speed: </strong> {coord.speed}</li>
+                    <li><strong>Speed: </strong> {wind.speed}</li>
                     <li><strong>Country: </strong> {sys.country}</li>
                     <li><strong>City: </strong> {name}</li>
                    
